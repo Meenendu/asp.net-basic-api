@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            console.log('ready')
+            var file;
+            $('#uploader').on('change', function () {
+                file = this.files[0];
+
+                //if (file.size > 1024) {
+                //    alert('max upload size is 1k');
+                //}
+
+                // Also see .name, .type
+            });
+
+            $('#btn').on('click', () => {
+                var formdata = new FormData();
+                formdata.append('img',file);
+                $.ajax({
+                    url: `/api/users/testUser1/image`,
+                    type: 'post',
+                    data: formdata,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InRlc3RVc2VyMiIsIm5iZiI6MTU2NjgyMzU1MCwiZXhwIjoxNTY2ODM0MzUwLCJpYXQiOjE1NjY4MjM1NTAsImlzcyI6IkRlbW9TZXJ2ZXIiLCJhdWQiOiJEZW1vQ2xpZW50In0.WO5LqZ21PHFJbLdlG-HMYRM2fZlwnyiYBeSGxQfCCIU`,
+                    },
+                    success: (res) => {
+                        console.log(res)
+                    },
+                    error: (err) => {
+                        console.log(err)
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <form id="form">
+        <input id="uploader" type="file" />
+        <input id="btn" type="button" value="upload"/>
+    </form>
+</body>
+</html>
